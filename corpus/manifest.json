@@ -265,11 +265,11 @@
       "expectation": "expectations/C07-api-break-no-baseline.json"
     },
     {
-      "id": "C08-update-metrics-baseline-skip-metrics",
+      "id": "C08-update-baseline-skip-metrics",
       "lane": "contracts",
       "kind": "single_run",
       "tier": "gates",
-      "expectation": "expectations/C08-update-metrics-baseline-skip-metrics.json"
+      "expectation": "expectations/C08-update-baseline-skip-metrics.json"
     }
   ]
 }
