@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0",
+  "compatibility": {
+    "minimum_codeclone": "2.1.0a1",
+    "minimum_report_schema": "2.11"
+  },
+  "scenarios": [
+    {
+      "id": "D01-identical-function-clone",
+      "lane": "detection",
+      "kind": "single_run",
+      "tier": "smoke",
+      "expectation": "expectations/D01-identical-function-clone.json"
+    },
+    {
+      "id": "D02-parameter-renamed-function-clone",
+      "lane": "detection",
+      "kind": "single_run",
+      "tier": "smoke",
+      "expectation": "expectations/D02-parameter-renamed-function-clone.json"
+    },
+    {
+      "id": "D03-cross-function-block-clone",
+      "lane": "detection",
+      "kind": "single_run",
+      "tier": "smoke",
+      "expectation": "expectations/D03-cross-function-block-clone.json"
+    },
+    {
+      "id": "D04-unused-function",
+      "lane": "detection",
+      "kind": "single_run",
+      "tier": "smoke",
+      "expectation": "expectations/D04-unused-function.json"
+    },
+    {
+      "id": "N01-near-duplicate-negative",
+      "lane": "negative-controls",
+      "kind": "single_run",
+      "tier": "smoke",
+      "expectation": "expectations/N01-near-duplicate-negative.json"
+    },
+    {
+      "id": "N02-block-threshold-negative",
+      "lane": "negative-controls",
+      "kind": "single_run",
+      "tier": "smoke",
+      "expectation": "expectations/N02-block-threshold-negative.json"
+    },
+    {
+      "id": "N03-reachable-entrypoint-negative",
+      "lane": "negative-controls",
+      "kind": "single_run",
+      "tier": "smoke",
+      "expectation": "expectations/N03-reachable-entrypoint-negative.json"
+    },
+    {
+      "id": "G01-clone-known-vs-new",
+      "lane": "governance",
+      "kind": "workflow",
+      "tier": "smoke",
+      "expectation": "expectations/G01-clone-known-vs-new.json"
+    },
+    {
+      "id": "M01-dependency-cycle",
+      "lane": "metrics",
+      "kind": "single_run",
+      "tier": "smoke",
+      "expectation": "expectations/M01-dependency-cycle.json"
+    },
+    {
+      "id": "C01-parse-error-contract",
+      "lane": "contracts",
+      "kind": "single_run",
+      "tier": "smoke",
+      "expectation": "expectations/C01-parse-error-contract.json"
+    },
+    {
+      "id": "D05-multi-block-clone",
+      "lane": "detection",
+      "kind": "single_run",
+      "tier": "full",
+      "expectation": "expectations/D05-multi-block-clone.json"
+    },
+    {
+      "id": "D08-complexity-hotspot",
+      "lane": "detection",
+      "kind": "single_run",
+      "tier": "full",
+      "expectation": "expectations/D08-complexity-hotspot.json"
+    },
+    {
+      "id": "D11-design-cycle-finding",
+      "lane": "detection",
+      "kind": "single_run",
+      "tier": "full",
+      "expectation": "expectations/D11-design-cycle-finding.json"
+    },
+    {
+      "id": "S01-duplicated-branches",
+      "lane": "structural",
+      "kind": "single_run",
+      "tier": "full",
+      "expectation": "expectations/S01-duplicated-branches.json"
+    },
+    {
+      "id": "S04-structural-negative",
+      "lane": "structural",
+      "kind": "single_run",
+      "tier": "full",
+      "expectation": "expectations/S04-structural-negative.json"
+    },
+    {
+      "id": "M02-fail-dead-code",
+      "lane": "metrics",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/M02-fail-dead-code.json"
+    },
+    {
+      "id": "M03-fail-threshold",
+      "lane": "metrics",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/M03-fail-threshold.json"
+    },
+    {
+      "id": "M04-fail-health",
+      "lane": "metrics",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/M04-fail-health.json"
+    },
+    {
+      "id": "M05-fail-complexity",
+      "lane": "metrics",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/M05-fail-complexity.json"
+    },
+    {
+      "id": "G02-baseline-roundtrip",
+      "lane": "governance",
+      "kind": "workflow",
+      "tier": "full",
+      "expectation": "expectations/G02-baseline-roundtrip.json"
+    },
+    {
+      "id": "G05-inline-dead-code-suppression",
+      "lane": "governance",
+      "kind": "single_run",
+      "tier": "full",
+      "expectation": "expectations/G05-inline-dead-code-suppression.json"
+    },
+    {
+      "id": "G06-ci-untrusted-baseline",
+      "lane": "governance",
+      "kind": "single_run",
+      "tier": "full",
+      "expectation": "expectations/G06-ci-untrusted-baseline.json"
+    },
+    {
+      "id": "C02-fail-on-new-metrics-no-baseline",
+      "lane": "contracts",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/C02-fail-on-new-metrics-no-baseline.json"
+    },
+    {
+      "id": "M06-fail-coupling",
+      "lane": "metrics",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/M06-fail-coupling.json"
+    },
+    {
+      "id": "M07-fail-cohesion",
+      "lane": "metrics",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/M07-fail-cohesion.json"
+    },
+    {
+      "id": "M08-min-typing-coverage",
+      "lane": "metrics",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/M08-min-typing-coverage.json"
+    },
+    {
+      "id": "M09-min-docstring-coverage",
+      "lane": "metrics",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/M09-min-docstring-coverage.json"
+    },
+    {
+      "id": "M10-metrics-new-dead-code",
+      "lane": "governance",
+      "kind": "workflow",
+      "tier": "gates",
+      "expectation": "expectations/M10-metrics-new-dead-code.json"
+    },
+    {
+      "id": "M11-typing-regression",
+      "lane": "governance",
+      "kind": "workflow",
+      "tier": "gates",
+      "expectation": "expectations/M11-typing-regression.json"
+    },
+    {
+      "id": "M12-docstring-regression",
+      "lane": "governance",
+      "kind": "workflow",
+      "tier": "gates",
+      "expectation": "expectations/M12-docstring-regression.json"
+    },
+    {
+      "id": "M13-api-break",
+      "lane": "governance",
+      "kind": "workflow",
+      "tier": "gates",
+      "expectation": "expectations/M13-api-break.json"
+    },
+    {
+      "id": "M14-coverage-hotspot",
+      "lane": "metrics",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/M14-coverage-hotspot.json"
+    },
+    {
+      "id": "C03-skip-metrics-gate-conflict",
+      "lane": "contracts",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/C03-skip-metrics-gate-conflict.json"
+    },
+    {
+      "id": "C04-untested-hotspots-no-coverage",
+      "lane": "contracts",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/C04-untested-hotspots-no-coverage.json"
+    },
+    {
+      "id": "C05-typing-regression-no-baseline",
+      "lane": "contracts",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/C05-typing-regression-no-baseline.json"
+    },
+    {
+      "id": "C06-docstring-regression-no-baseline",
+      "lane": "contracts",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/C06-docstring-regression-no-baseline.json"
+    },
+    {
+      "id": "C07-api-break-no-baseline",
+      "lane": "contracts",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/C07-api-break-no-baseline.json"
+    },
+    {
+      "id": "C08-update-metrics-baseline-skip-metrics",
+      "lane": "contracts",
+      "kind": "single_run",
+      "tier": "gates",
+      "expectation": "expectations/C08-update-metrics-baseline-skip-metrics.json"
+    }
+  ]
+}

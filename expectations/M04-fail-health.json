@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "M04-fail-health",
+  "kind": "single_run",
+  "scenario_path": "corpus/scenarios/metrics/M01-dependency-cycle",
+  "cli": {
+    "extra_args": [
+      "--api-surface",
+      "--fail-health",
+      "80"
+    ]
+  },
+  "expect": {
+    "exit_code": 3,
+    "metrics": {
+      "health": {
+        "max_total": 79
+      },
+      "dependency_cycles": {
+        "exact": 1
+      }
+    },
+    "determinism": {
+      "semantic_projection_stable": true
+    }
+  }
+}

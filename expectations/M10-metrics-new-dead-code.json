@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "M10-metrics-new-dead-code",
+  "kind": "workflow",
+  "scenario_path": "corpus/scenarios/governance/M10-metrics-new-dead-code",
+  "steps": [
+    {
+      "id": "establish_metrics_baseline",
+      "fixture": "base",
+      "use_work_copy": true,
+      "cli": {
+        "extra_args": [
+          "--api-surface",
+          "--update-metrics-baseline",
+          "--metrics-baseline",
+          "{work}/metrics-baseline.json"
+        ]
+      },
+      "expect": {
+        "exit_code": 0
+      }
+    },
+    {
+      "id": "detect_new_dead_code",
+      "fixture": "changed",
+      "use_work_copy": true,
+      "overlay": "changed",
+      "cli": {
+        "extra_args": [
+          "--api-surface",
+          "--metrics-baseline",
+          "{work}/metrics-baseline.json",
+          "--fail-on-new-metrics"
+        ]
+      },
+      "expect": {
+        "exit_code": 3
+      }
+    }
+  ]
+}

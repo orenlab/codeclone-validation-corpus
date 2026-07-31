@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "C01-parse-error-contract",
+  "kind": "single_run",
+  "scenario_path": "corpus/scenarios/contracts/C01-parse-error-contract",
+  "cli": {
+    "extra_args": []
+  },
+  "expect": {
+    "exit_code": 0,
+    "inventory": {
+      "total_found": 2,
+      "analyzed": 1,
+      "skipped": 1
+    },
+    "findings": {
+      "exact_by_kind": {
+        "function": 0,
+        "block": 0
+      },
+      "must_not_include": [
+        {"family": "dead_code"}
+      ]
+    },
+    "determinism": {
+      "semantic_projection_stable": true
+    }
+  }
+}

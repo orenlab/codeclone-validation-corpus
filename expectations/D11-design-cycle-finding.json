@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "D11-design-cycle-finding",
+  "kind": "single_run",
+  "scenario_path": "corpus/scenarios/metrics/M01-dependency-cycle",
+  "cli": {
+    "extra_args": ["--api-surface"]
+  },
+  "expect": {
+    "exit_code": 0,
+    "findings": {
+      "exact_by_kind": {
+        "cycle": 1
+      },
+      "must_include": [
+        {"family": "design", "kind": "cycle"}
+      ]
+    },
+    "metrics": {
+      "dependency_cycles": {
+        "exact": 1
+      }
+    },
+    "determinism": {
+      "semantic_projection_stable": true
+    }
+  }
+}

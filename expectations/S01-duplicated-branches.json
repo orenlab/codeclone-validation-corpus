@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "S01-duplicated-branches",
+  "kind": "single_run",
+  "scenario_path": "corpus/scenarios/structural/S01-duplicated-branches",
+  "cli": {
+    "extra_args": [
+      "--min-loc",
+      "1",
+      "--min-stmt",
+      "1"
+    ]
+  },
+  "expect": {
+    "exit_code": 0,
+    "findings": {
+      "exact_by_kind": {
+        "duplicated_branches": 1
+      },
+      "must_include": [
+        {"family": "structural", "kind": "duplicated_branches"}
+      ]
+    },
+    "determinism": {
+      "semantic_projection_stable": true
+    }
+  }
+}

@@ -1,0 +1,26 @@
+name: validation-corpus-gates
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - name: Install CodeClone prerelease
+        run: uv pip install --system "codeclone==2.1.0a1"
+      - name: Run gates corpus
+        working-directory: .
+        env:
+          CODECLONE_COMMAND: codeclone
+        run: |
+          uv sync
+          uv run python -m corpus_tools.cli --tier gates --codeclone-command codeclone

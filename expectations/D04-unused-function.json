@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "D04-unused-function",
+  "kind": "single_run",
+  "scenario_path": "corpus/scenarios/detection/D04-unused-function",
+  "cli": {
+    "extra_args": ["--api-surface"]
+  },
+  "expect": {
+    "exit_code": 0,
+    "findings": {
+      "exact_total_active": 1,
+      "must_include": [
+        {
+          "family": "dead_code",
+          "kind": "unused_symbol",
+          "path": "svc.py",
+          "qualname": "svc:unused_helper",
+          "confidence": "high"
+        }
+      ],
+      "must_not_include": [
+        {"family": "clones", "kind": "function"}
+      ]
+    },
+    "determinism": {
+      "semantic_projection_stable": true
+    }
+  }
+}

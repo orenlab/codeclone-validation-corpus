@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "G02-baseline-roundtrip",
+  "kind": "workflow",
+  "scenario_path": "corpus/scenarios/detection/D01-identical-function-clone",
+  "steps": [
+    {
+      "id": "establish_baseline",
+      "fixture": "root",
+      "cli": {
+        "extra_args": [
+          "--update-baseline",
+          "--baseline",
+          "{work}/baseline.json"
+        ]
+      },
+      "expect": {
+        "exit_code": 0
+      }
+    },
+    {
+      "id": "verify_unchanged",
+      "fixture": "root",
+      "cli": {
+        "extra_args": [
+          "--baseline",
+          "{work}/baseline.json",
+          "--fail-on-new"
+        ]
+      },
+      "expect": {
+        "exit_code": 0,
+        "clones": {
+          "function_groups": {
+            "new": 0,
+            "known": 1
+          }
+        }
+      }
+    }
+  ]
+}

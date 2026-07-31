@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "C03-skip-metrics-gate-conflict",
+  "kind": "single_run",
+  "scenario_path": "corpus/scenarios/detection/D04-unused-function",
+  "cli": {
+    "extra_args": [
+      "--skip-metrics",
+      "--fail-dead-code"
+    ]
+  },
+  "expect": {
+    "exit_code": 2
+  }
+}

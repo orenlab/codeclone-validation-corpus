@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "M07-fail-cohesion",
+  "kind": "single_run",
+  "scenario_path": "corpus/scenarios/metrics/M07-fail-cohesion",
+  "cli": {
+    "extra_args": [
+      "--api-surface",
+      "--fail-cohesion",
+      "3"
+    ]
+  },
+  "expect": {
+    "exit_code": 3,
+    "determinism": {
+      "semantic_projection_stable": true
+    }
+  }
+}

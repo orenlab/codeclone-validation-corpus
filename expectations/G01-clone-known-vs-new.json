@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "G01-clone-known-vs-new",
+  "kind": "workflow",
+  "scenario_path": "corpus/scenarios/governance/G01-clone-known-vs-new",
+  "steps": [
+    {
+      "id": "establish_baseline",
+      "fixture": "base",
+      "cli": {
+        "extra_args": [
+          "--update-baseline",
+          "--baseline",
+          "{work}/baseline.json"
+        ]
+      },
+      "expect": {
+        "exit_code": 0
+      }
+    },
+    {
+      "id": "verify_changed",
+      "fixture": "changed",
+      "cli": {
+        "extra_args": [
+          "--baseline",
+          "{work}/baseline.json",
+          "--fail-on-new"
+        ]
+      },
+      "expect": {
+        "exit_code": 3,
+        "clones": {
+          "function_groups": {
+            "new": 1,
+            "known": 1
+          }
+        }
+      }
+    }
+  ]
+}

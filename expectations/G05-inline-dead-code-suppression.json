@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "G05-inline-dead-code-suppression",
+  "kind": "single_run",
+  "scenario_path": "corpus/scenarios/governance/G05-inline-dead-code-suppression",
+  "cli": {
+    "extra_args": [
+      "--api-surface",
+      "--fail-dead-code"
+    ]
+  },
+  "expect": {
+    "exit_code": 0,
+    "findings": {
+      "exact_by_kind": {
+        "unused_symbol": 0
+      },
+      "must_not_include": [
+        {"family": "dead_code", "kind": "unused_symbol"}
+      ]
+    },
+    "metrics": {
+      "dead_code": {
+        "summary": {
+          "suppressed": 1
+        }
+      }
+    },
+    "determinism": {
+      "semantic_projection_stable": true
+    }
+  }
+}

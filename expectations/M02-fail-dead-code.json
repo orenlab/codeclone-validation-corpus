@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "M02-fail-dead-code",
+  "kind": "single_run",
+  "scenario_path": "corpus/scenarios/detection/D04-unused-function",
+  "cli": {
+    "extra_args": [
+      "--api-surface",
+      "--fail-dead-code"
+    ]
+  },
+  "expect": {
+    "exit_code": 3,
+    "findings": {
+      "must_include": [
+        {
+          "family": "dead_code",
+          "kind": "unused_symbol",
+          "path": "svc.py",
+          "qualname": "svc:unused_helper",
+          "confidence": "high"
+        }
+      ]
+    },
+    "determinism": {
+      "semantic_projection_stable": true
+    }
+  }
+}

@@ -1,0 +1,24 @@
+name: validation-corpus-full
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  full:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - name: Install CodeClone prerelease
+        run: uv pip install --system "codeclone==2.1.0a1"
+      - name: Run full corpus
+        env:
+          CODECLONE_COMMAND: codeclone
+        run: |
+          uv sync
+          uv run python -m corpus_tools.cli --tier all --codeclone-command codeclone

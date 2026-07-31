@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "D08-complexity-hotspot",
+  "kind": "single_run",
+  "scenario_path": "corpus/scenarios/detection/D08-complexity-hotspot",
+  "cli": {
+    "extra_args": [
+      "--api-surface",
+      "--min-loc",
+      "1",
+      "--min-stmt",
+      "1"
+    ]
+  },
+  "expect": {
+    "exit_code": 0,
+    "findings": {
+      "exact_by_kind": {
+        "function_hotspot": 1
+      },
+      "must_include": [
+        {
+          "family": "design",
+          "kind": "function_hotspot",
+          "path": "complex.py",
+          "qualname": "complex:complex_hotspot"
+        }
+      ]
+    },
+    "determinism": {
+      "semantic_projection_stable": true
+    }
+  }
+}

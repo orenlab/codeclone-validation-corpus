@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "D02-parameter-renamed-function-clone",
+  "kind": "single_run",
+  "scenario_path": "corpus/scenarios/detection/D02-parameter-renamed-function-clone",
+  "cli": {
+    "extra_args": []
+  },
+  "expect": {
+    "exit_code": 0,
+    "findings": {
+      "exact_by_kind": {
+        "function": 1,
+        "block": 7
+      },
+      "must_include": [
+        {
+          "family": "clones",
+          "kind": "function",
+          "subjects": [
+            ["a.py", "a:transform_a"],
+            ["b.py", "b:transform_b"]
+          ]
+        }
+      ],
+      "must_not_include": [
+        {"family": "dead_code"}
+      ]
+    },
+    "determinism": {
+      "semantic_projection_stable": true
+    }
+  }
+}

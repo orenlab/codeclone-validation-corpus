@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "M05-fail-complexity",
+  "kind": "single_run",
+  "scenario_path": "corpus/scenarios/detection/D08-complexity-hotspot",
+  "cli": {
+    "extra_args": [
+      "--api-surface",
+      "--min-loc",
+      "1",
+      "--min-stmt",
+      "1",
+      "--fail-complexity",
+      "5"
+    ]
+  },
+  "expect": {
+    "exit_code": 3,
+    "findings": {
+      "exact_by_kind": {
+        "function_hotspot": 1
+      }
+    },
+    "determinism": {
+      "semantic_projection_stable": true
+    }
+  }
+}
