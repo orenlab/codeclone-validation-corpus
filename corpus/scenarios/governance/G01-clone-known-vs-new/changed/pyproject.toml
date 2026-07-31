@@ -1,0 +1,11 @@
+# CodeClone validation corpus fixture configuration.
+#
+# The v3 baseline container binds every baseline to a declared scope, so any
+# scenario that runs --update-baseline or a baseline-aware gate must publish a
+# stable baseline_scope_id. Fixture states that model the same project before
+# and after a change (base/ and changed/) MUST share one id, otherwise the
+# second run rejects the first run's baseline as out-of-scope.
+#
+# Scope: G01 clone known-vs-new (base + changed)
+[tool.codeclone]
+baseline_scope_id = "b1e00319-20cf-4bdd-8b2f-6695fe602ef9"
