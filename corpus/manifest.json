@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "compatibility": {
-    "minimum_codeclone": "2.1.0a1",
-    "minimum_report_schema": "2.11"
+    "minimum_codeclone": "2.1.0a2",
+    "minimum_report_schema": "3.0"
   },
   "scenarios": [
     {
