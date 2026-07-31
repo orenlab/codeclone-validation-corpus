@@ -12,8 +12,10 @@ Source of truth for gate flags: `tests/fixtures/contract_snapshots/cli_help.txt`
 |---------|-------|--------------------------------------------------|
 | `smoke` | 10    | PRs, quick regression                            |
 | `gates` | 20    | Quality-gate conformance (`--tier gates`)        |
-| `full`  | 13    | Detection / structural / governance beyond gates |
-| `all`   | 34    | Full conformance (`--tier all`)                  |
+| `full`  | 8     | Detection / structural / governance beyond gates |
+| `all`   | 38    | Full conformance (`--tier all`)                  |
+
+`--tier full` selects the `full` **and** `gates` entries (28 scenarios); `--tier all` selects every entry (38).
 
 ## Quality gates (`gates` tier)
 
@@ -49,7 +51,7 @@ Every public **Quality gates** flag from CLI help has at least one corpus scenar
 | Condition | Exit | Scenario |
 |-----------|------|----------|
 | `--skip-metrics` + `--fail-dead-code` | 2 | C03 |
-| `--skip-metrics` + `--update-metrics-baseline` | 2 | C08 |
+| `--skip-metrics` + `--update-baseline` | 2 | C08 |
 
 ## Smoke (10)
 
@@ -66,7 +68,7 @@ Every public **Quality gates** flag from CLI help has at least one corpus scenar
 | M01 | metrics           | Dependency cycle gate            |
 | C01 | contracts         | Parse error partial success      |
 
-## Full (+13, non-gate capabilities)
+## Full (+8, non-gate capabilities)
 
 | ID  | Lane       | Capability                                       |
 |-----|------------|--------------------------------------------------|
@@ -81,16 +83,35 @@ Every public **Quality gates** flag from CLI help has at least one corpus scenar
 
 ## Not yet covered (future extended tier)
 
-- `--update-metrics-baseline` contract conflict with `--skip-metrics` (exit 2)
 - `--ci` auto-enabling `--fail-on-new-metrics` when trusted metrics baseline is present
+- Per-lane baseline trust degradation (opaque lane reported, gate still allowed to run)
+- `baseline_scope_id` mismatch between the publishing run and the gating run
 - Segment clone groups (`findings.groups.clones.segments` — empty on 2.1.0a1 defaults)
 - Clone cohort drift / guard exit divergence (S02–S03)
 - Golden-fixture suppressed clones (G04)
 - Metrics baseline delta workflow beyond dead code / adoption / API (G03)
 - Changed-only / patch-verify gate combinations
 
-## Metrics baseline workflows
+## Baseline workflows
 
-Scenarios M10–M13 use `use_work_copy` + `overlay` so both steps analyze the **same directory path**. Metrics baselines
-store absolute file paths from the scan root; stale `work/*/metrics-baseline.json` or fixture `.codeclone/` caches from
-earlier runs must not be reused — the runner resets `work/<scenario>/` before each workflow.
+### One container, one pair of flags
+
+There is no separate metrics baseline file. The clone lanes and the metrics lanes live in the same v3 baseline
+container, so the corpus drives every lane through `--baseline` / `--update-baseline`. The old `--metrics-baseline` and
+`--update-metrics-baseline` flags were removed from the public CLI and are no longer in the runner allowlist; an
+expectation that reintroduces them is rejected before CodeClone is invoked.
+
+### Every baselined fixture declares a scope
+
+Publishing or gating against a baseline requires a stable `baseline_scope_id`, and that id is read from the scanned
+root's `pyproject.toml` — there is no CLI flag for it. Fixtures used by G01, G02, M10–M13 and C08 therefore ship a
+minimal `[tool.codeclone]` block. A fixture's `base/` and `changed/` states model one project across a change, so they
+**must** declare the *same* id; different ids would make the second run reject the first run's baseline as
+out-of-scope and the scenario would pass for the wrong reason.
+
+### Work-directory hygiene
+
+Scenarios M10–M13 use `use_work_copy` + `overlay` so both steps analyze the **same directory path**. Baselines store
+absolute file paths from the scan root; stale `work/*/baseline.json` or fixture `.codeclone/` caches from earlier runs
+must not be reused — the runner resets `work/<scenario>/` before each workflow. `work/` is generated output and is
+git-ignored: committing it would both leak absolute local paths and let a stale baseline seed a later run.
