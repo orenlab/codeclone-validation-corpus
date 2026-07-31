@@ -15,8 +15,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.14"
+      # TEMPORARY: installed from git, not PyPI.
+      # This corpus targets the v3 baseline container (one --baseline /
+      # --update-baseline pair, required baseline_scope_id). That surface does
+      # not exist in 2.1.0a1, the newest release on PyPI, so the pinned install
+      # would fail every baseline scenario.
+      # Revisit at release: switch back to a version pin once 2.1.0a2 is
+      # published, or to the default branch once fix/baseline-v3-migration lands.
       - name: Install CodeClone prerelease
-        run: uv pip install --system "codeclone==2.1.0a1"
+        run: uv pip install --system "codeclone @ git+https://github.com/orenlab/codeclone.git@fix/baseline-v3-migration"
       - name: Run gates corpus
         working-directory: .
         env:
