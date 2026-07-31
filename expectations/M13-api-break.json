@@ -5,15 +5,15 @@
   "scenario_path": "corpus/scenarios/governance/M13-api-break",
   "steps": [
     {
-      "id": "establish_metrics_baseline",
+      "id": "establish_baseline",
       "fixture": "base",
       "use_work_copy": true,
       "cli": {
         "extra_args": [
           "--api-surface",
-          "--update-metrics-baseline",
-          "--metrics-baseline",
-          "{work}/metrics-baseline.json"
+          "--update-baseline",
+          "--baseline",
+          "{work}/baseline.json"
         ]
       },
       "expect": {
@@ -28,8 +28,8 @@
       "cli": {
         "extra_args": [
           "--api-surface",
-          "--metrics-baseline",
-          "{work}/metrics-baseline.json",
+          "--baseline",
+          "{work}/baseline.json",
           "--fail-on-api-break"
         ]
       },

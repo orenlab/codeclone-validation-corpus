@@ -10,6 +10,11 @@ from pathlib import Path
 from typing import Any
 
 # Closed allowlist of public CodeClone CLI flags the corpus may append.
+#
+# The metrics baseline no longer has its own file or its own flags: it is one
+# lane inside the v3 baseline container, so --metrics-baseline and
+# --update-metrics-baseline were removed from the public CLI and must not be
+# reintroduced here. Use --baseline / --update-baseline for every lane.
 ALLOWED_CODECLONE_ARGS = frozenset(
     {
         "--json",
@@ -26,7 +31,6 @@ ALLOWED_CODECLONE_ARGS = frozenset(
         "--cache-path",
         "--api-surface",
         "--fail-on-new-metrics",
-        "--metrics-baseline",
         "--fail-health",
         "--fail-complexity",
         "--fail-cohesion",
@@ -41,7 +45,6 @@ ALLOWED_CODECLONE_ARGS = frozenset(
         "--fail-on-untested-hotspots",
         "--min-typing-coverage",
         "--min-docstring-coverage",
-        "--update-metrics-baseline",
     }
 )
 

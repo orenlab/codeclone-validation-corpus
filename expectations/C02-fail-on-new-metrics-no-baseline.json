@@ -7,8 +7,8 @@
     "extra_args": [
       "--api-surface",
       "--fail-on-new-metrics",
-      "--metrics-baseline",
-      "{work}/missing-metrics-baseline.json"
+      "--baseline",
+      "{work}/missing-baseline.json"
     ]
   },
   "expect": {

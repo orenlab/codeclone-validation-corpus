@@ -8,7 +8,7 @@ from typing import Any
 
 _WORK_PROJECT_DIR = "project"
 _WORK_ARTIFACTS = (
-    "metrics-baseline.json",
+    "baseline.json",
     "report.json",
     "cache.json",
 )
