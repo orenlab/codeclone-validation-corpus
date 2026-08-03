@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import shutil
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -21,7 +21,7 @@ from corpus_tools.matchers import (
     FindingRef,
     active_finding_count,
     clone_group_count,
-    clone_group_novelty_counts,
+    clone_group_novelty_tally,
     dead_code_summary,
     dependency_cycle_count,
     family_group_count,
@@ -46,6 +46,38 @@ class VerificationError:
 class VerificationResult:
     ok: bool
     errors: tuple[VerificationError, ...] = ()
+
+
+def _check_novelty(
+    report: Mapping[str, Any],
+    function_groups: Mapping[str, Any],
+    asserted: Sequence[str],
+) -> list[VerificationError]:
+    """Evaluate novelty expectations, or refuse to evaluate them at all.
+
+    A group with no usable novelty value is not a "known" group. When any
+    group is unevidenced the counts are meaningless, so we emit one honest
+    reason instead of a mismatch cascade that would read as a real change.
+    """
+    tally = clone_group_novelty_tally(report)
+    if not tally.evaluable:
+        return [
+            VerificationError(
+                "clones.function_groups: novelty missing from report — "
+                "cannot evaluate novelty expectations "
+                f"({tally.unevidenced_total} of {tally.total} function clone "
+                f"groups carry no novelty evidence: "
+                f"{tally.describe_unevidenced()})"
+            )
+        ]
+    return [
+        VerificationError(
+            f"function_groups.{key} expected "
+            f"{function_groups[key]}, got {tally.count(key)}"
+        )
+        for key in asserted
+        if tally.count(key) != int(function_groups[key])
+    ]
 
 
 def _check_expect_block(
@@ -137,17 +169,9 @@ def _check_expect_block(
     if isinstance(clones, Mapping):
         function_groups = clones.get("function_groups")
         if isinstance(function_groups, Mapping):
-            novelty = clone_group_novelty_counts(report)
-            for key in ("new", "known"):
-                if key in function_groups and novelty.get(key, 0) != int(
-                    function_groups[key]
-                ):
-                    errors.append(
-                        VerificationError(
-                            f"function_groups.{key} expected "
-                            f"{function_groups[key]}, got {novelty.get(key, 0)}"
-                        )
-                    )
+            asserted = [key for key in ("new", "known") if key in function_groups]
+            if asserted:
+                errors.extend(_check_novelty(report, function_groups, asserted))
 
     metrics = expect.get("metrics")
     if isinstance(metrics, Mapping):

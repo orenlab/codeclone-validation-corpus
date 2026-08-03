@@ -69,16 +69,66 @@ def active_finding_count(report: Mapping[str, Any]) -> int:
     return total
 
 
-def clone_group_novelty_counts(report: Mapping[str, Any]) -> dict[str, int]:
-    groups = _clone_groups(report, "functions")
-    counts = {"new": 0, "known": 0}
-    for group in groups:
-        novelty = str(group.get("novelty", "known"))
-        if novelty == "new":
-            counts["new"] += 1
+# Only these two novelty values are evidence about a group's novelty. Anything
+# else -- an absent field, an empty string, the engine's own "unavailable" lane
+# signal, or a token this corpus does not know -- means the report cannot tell
+# us whether the group is new, and must never be tallied as "known".
+_NOVELTY_NEW = "new"
+_NOVELTY_KNOWN = "known"
+_NOVELTY_ABSENT = "<absent>"
+
+
+@dataclass(frozen=True, slots=True)
+class NoveltyTally:
+    """Novelty counts alongside the groups that carried no novelty evidence.
+
+    ``unevidenced`` is a sorted (token, count) breakdown so callers can name
+    what the report actually said instead of guessing.
+    """
+
+    new: int = 0
+    known: int = 0
+    unevidenced: tuple[tuple[str, int], ...] = ()
+
+    @property
+    def unevidenced_total(self) -> int:
+        return sum(count for _, count in self.unevidenced)
+
+    @property
+    def total(self) -> int:
+        return self.new + self.known + self.unevidenced_total
+
+    @property
+    def evaluable(self) -> bool:
+        """True when every group carried a novelty value we can trust."""
+        return not self.unevidenced
+
+    def count(self, key: str) -> int:
+        return self.new if key == _NOVELTY_NEW else self.known
+
+    def describe_unevidenced(self) -> str:
+        return ", ".join(f"{token}={count}" for token, count in self.unevidenced)
+
+
+def clone_group_novelty_tally(report: Mapping[str, Any]) -> NoveltyTally:
+    new = 0
+    known = 0
+    unevidenced: dict[str, int] = {}
+    for group in _clone_groups(report, "functions"):
+        raw = group.get("novelty")
+        token = _NOVELTY_ABSENT if raw is None else str(raw).strip()
+        if token == _NOVELTY_NEW:
+            new += 1
+        elif token == _NOVELTY_KNOWN:
+            known += 1
         else:
-            counts["known"] += 1
-    return counts
+            key = token or _NOVELTY_ABSENT
+            unevidenced[key] = unevidenced.get(key, 0) + 1
+    return NoveltyTally(
+        new=new,
+        known=known,
+        unevidenced=tuple(sorted(unevidenced.items())),
+    )
 
 
 def clone_group_count(report: Mapping[str, Any], clone_kind: str) -> int:
