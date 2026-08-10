@@ -97,6 +97,13 @@
       "expectation": "expectations/D11-design-cycle-finding.json"
     },
     {
+      "id": "D12-deferred-cycle-finding",
+      "lane": "detection",
+      "kind": "single_run",
+      "tier": "full",
+      "expectation": "expectations/D12-deferred-cycle-finding.json"
+    },
+    {
       "id": "S01-duplicated-branches",
       "lane": "structural",
       "kind": "single_run",

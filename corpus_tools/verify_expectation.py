@@ -147,7 +147,15 @@ def _check_expect_block(
                 elif kind in {
                     "function_hotspot",
                     "class_hotspot",
-                    "cycle",
+                    # A dependency cycle is classified by import binding time:
+                    # "import_cycle" when the import-time subgraph still cycles,
+                    # "deferred_cycle" when every edge binds inside a function
+                    # body, a module __getattr__, or a lazy import. The old
+                    # undifferentiated "cycle" kind is deliberately absent, so a
+                    # stale expectation fails loudly as an unknown key instead of
+                    # silently counting zero forever.
+                    "import_cycle",
+                    "deferred_cycle",
                     "instance_independent_method",
                     "unused_symbol",
                 }:

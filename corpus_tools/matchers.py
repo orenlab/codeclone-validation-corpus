@@ -19,6 +19,7 @@ class FindingRef:
     path: str = ""
     qualname: str = ""
     confidence: str = ""
+    severity: str = ""
 
 
 def _clone_groups(report: Mapping[str, Any], clone_kind: str) -> list[Mapping[str, Any]]:
@@ -231,6 +232,8 @@ def _group_matches(ref: FindingRef, group: Mapping[str, Any]) -> bool:
         return True
     if ref.kind and str(group.get("kind", "")) != ref.kind:
         return False
+    if ref.severity and str(group.get("severity", "")) != ref.severity:
+        return False
     items = group.get("items")
     if not isinstance(items, Sequence) or not items:
         return True
@@ -269,4 +272,5 @@ def parse_finding_ref(payload: Mapping[str, Any]) -> FindingRef:
         path=str(payload.get("path", "")),
         qualname=str(payload.get("qualname", "")),
         confidence=str(payload.get("confidence", "")),
+        severity=str(payload.get("severity", "")),
     )

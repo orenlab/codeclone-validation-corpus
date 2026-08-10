@@ -12,10 +12,10 @@ Source of truth for gate flags: `tests/fixtures/contract_snapshots/cli_help.txt`
 |---------|-------|--------------------------------------------------|
 | `smoke` | 10    | PRs, quick regression                            |
 | `gates` | 20    | Quality-gate conformance (`--tier gates`)        |
-| `full`  | 8     | Detection / structural / governance beyond gates |
-| `all`   | 38    | Full conformance (`--tier all`)                  |
+| `full`  | 9     | Detection / structural / governance beyond gates |
+| `all`   | 39    | Full conformance (`--tier all`)                  |
 
-`--tier full` selects the `full` **and** `gates` entries (28 scenarios); `--tier all` selects every entry (38).
+`--tier full` selects the `full` **and** `gates` entries (29 scenarios); `--tier all` selects every entry (39).
 
 ## Quality gates (`gates` tier)
 
@@ -68,13 +68,14 @@ Every public **Quality gates** flag from CLI help has at least one corpus scenar
 | M01 | metrics           | Dependency cycle gate            |
 | C01 | contracts         | Parse error partial success      |
 
-## Full (+8, non-gate capabilities)
+## Full (+9, non-gate capabilities)
 
 | ID  | Lane       | Capability                                       |
 |-----|------------|--------------------------------------------------|
 | D05 | detection  | Multi block clone groups                         |
 | D08 | detection  | Complexity design hotspot                        |
-| D11 | detection  | Design cycle finding                             |
+| D11 | detection  | Design cycle finding (import-time, critical)     |
+| D12 | detection  | Deferred-only cycle finding (warning)            |
 | S01 | structural | Duplicated branches                              |
 | S04 | structural | No structural findings                           |
 | G02 | governance | Baseline roundtrip (no new)                      |

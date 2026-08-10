@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "scenario_id": "D11-design-cycle-finding",
+  "scenario_id": "D12-deferred-cycle-finding",
   "kind": "single_run",
-  "scenario_path": "corpus/scenarios/metrics/M01-dependency-cycle",
+  "scenario_path": "corpus/scenarios/detection/D12-deferred-cycle-finding",
   "cli": {
     "extra_args": ["--api-surface"]
   },
@@ -10,9 +10,13 @@
     "exit_code": 0,
     "findings": {
       "exact_by_kind": {
-        "import_cycle": 1
+        "deferred_cycle": 1,
+        "import_cycle": 0
       },
       "must_include": [
+        {"family": "design", "kind": "deferred_cycle", "severity": "warning"}
+      ],
+      "must_not_include": [
         {"family": "design", "kind": "import_cycle"}
       ]
     },
