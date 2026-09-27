@@ -7,5 +7,12 @@
 # second run rejects the first run's baseline as out-of-scope.
 #
 # Scope: M10 metrics new dead code (base + changed)
+#
+# Dead-code world: CodeClone 2.1.0a2 asserts a public symbol dead on internal
+# evidence alone only in a closed world (every consumer is inside the
+# repository); in the default open world it reports it as unresolved
+# (externally reachable). These fixtures model whole applications, and the
+# scenarios assert the dead-code verdict, so the world is declared closed.
 [tool.codeclone]
+dead_code_world = "closed"
 baseline_scope_id = "47852fb5-c3e8-4290-b63a-f5b9ff991613"
